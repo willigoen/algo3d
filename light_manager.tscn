@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://73x286ncytmg"]
+
+[node name="LightManager" type="Node"]
+
+[node name="SunLight_node" type="Node3D" parent="."]
+
+[node name="Sun" type="DirectionalLight3D" parent="SunLight_node"]
+transform = Transform3D(0.801995, 0.3845, -0.457126, 0, 0.765281, 0.643696, 0.597331, -0.516241, 0.613751, 0, 1.67072, 0)
+visible = false
+light_energy = 1.205
+light_indirect_energy = 1.103
+light_angular_distance = 23.08
+shadow_enabled = true
+shadow_normal_bias = 0.0
+shadow_reverse_cull_face = true
+shadow_transmittance_bias = 0.5
+shadow_blur = 3.5
+sky_mode = 1
+
+[node name="Environment" type="DirectionalLight3D" parent="SunLight_node"]
+transform = Transform3D(0.801995, 0.3845, -0.457126, 0, 0.765281, 0.643696, 0.597331, -0.516241, 0.613751, 0, 1.67072, 0)
+visible = false
+light_energy = 1.205
+light_indirect_energy = 1.103
+light_angular_distance = 23.08
+shadow_enabled = true
+shadow_normal_bias = 0.0
+shadow_reverse_cull_face = true
+shadow_transmittance_bias = 0.5
+shadow_blur = 3.5
+sky_mode = 2

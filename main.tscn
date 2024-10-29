@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://btt4pttacg7th"]
+
+[ext_resource type="Script" path="res://scripts/Camera3D.gd" id="1_mc4hu"]
+[ext_resource type="Script" path="res://scripts/PanHandler.gd" id="2_c35ob"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_itxba"]
+sky_curve = 0.160766
+
+[sub_resource type="Sky" id="Sky_bi1w7"]
+sky_material = SubResource("ProceduralSkyMaterial_itxba")
+
+[sub_resource type="Environment" id="Environment_e02o5"]
+background_mode = 2
+sky = SubResource("Sky_bi1w7")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_knyav"]
+
+[sub_resource type="Compositor" id="Compositor_jkagv"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ilde5"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bvith"]
+
+[node name="Main" type="Node"]
+
+[node name="LightManager" type="Node" parent="."]
+
+[node name="LightsNode" type="Node3D" parent="LightManager"]
+
+[node name="Sun" type="DirectionalLight3D" parent="LightManager/LightsNode"]
+transform = Transform3D(0.801995, 0.3845, -0.457126, 0, 0.765281, 0.643696, 0.597331, -0.516241, 0.613751, 0, 1.67072, 0)
+light_color = Color(0.758192, 0.758192, 0.758192, 1)
+light_indirect_energy = 1.103
+light_angular_distance = 23.08
+shadow_enabled = true
+shadow_normal_bias = 0.0
+shadow_reverse_cull_face = true
+shadow_transmittance_bias = 0.5
+shadow_blur = 3.5
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="LightManager/LightsNode"]
+environment = SubResource("Environment_e02o5")
+
+[node name="CameraManager" type="Node" parent="."]
+
+[node name="CameraDollyNode" type="Node3D" parent="CameraManager"]
+
+[node name="Camera3D" type="Camera3D" parent="CameraManager/CameraDollyNode"]
+transform = Transform3D(1, 0, 0, 0, 0.950472, 0.310809, 0, -0.310809, 0.950472, 0.0162593, 1.6135, 3.94374)
+attributes = SubResource("CameraAttributesPractical_knyav")
+compositor = SubResource("Compositor_jkagv")
+current = true
+fov = 80.0
+script = ExtResource("1_mc4hu")
+
+[node name="PanHandler" type="Node" parent="CameraManager/CameraDollyNode/Camera3D"]
+script = ExtResource("2_c35ob")
+
+[node name="CameraTarget" type="Node3D" parent="CameraManager/CameraDollyNode"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.547673, 0)
+mesh = SubResource("BoxMesh_ilde5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(26.8525, 0, 0, 0, 6.22316, 0, 0, 0, 23.5879, 0, 0, 0)
+mesh = SubResource("PlaneMesh_bvith")

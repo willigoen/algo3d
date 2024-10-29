@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://btt4pttacg7th"]
+
+[ext_resource type="Script" path="res://scripts/Camera3D.gd" id="1_mc4hu"]
+[ext_resource type="Script" path="res://scripts/PanHandler.gd" id="2_c35ob"]
+
+[sub_resource type="Environment" id="Environment_62psl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ilde5"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bvith"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Camera3D" type="Camera3D" parent="Control"]
+transform = Transform3D(1, 0, 0, 0, 0.950472, 0.310809, 0, -0.310809, 0.950472, 0, 1.65309, 3.98912)
+environment = SubResource("Environment_62psl")
+script = ExtResource("1_mc4hu")
+
+[node name="PanHandler" type="Node" parent="Control/Camera3D"]
+script = ExtResource("2_c35ob")
+pan_sensitivity = null
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.547673, 0)
+mesh = SubResource("BoxMesh_ilde5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(26.8525, 0, 0, 0, 6.22316, 0, 0, 0, 23.5879, 0, 0, 0)
+mesh = SubResource("PlaneMesh_bvith")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Node3D" type="Node3D" parent="Node"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node/Node3D"]
