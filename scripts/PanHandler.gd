@@ -1,17 +1,32 @@
-extends Node
+extends Node3D
 
-@export var pan_sensitivity: float = 0.05
-var camera: Camera3D = null  # Referencia a la cámara principal
+@export var pan_sensitivity: float = 0.01
+@onready var CameraGimbal: Node3D = self  # Referencia a la cámara principal
 
-# Configura la referencia a la cámara desde el script de la cámara
-func set_camera(cam):
-	camera = cam
+
+func _process(_delta):
+	print(CameraGimbal.position)
+	pass
+
+func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed:
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			else:
+				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	pan_camera(event)
+
 
 # Ejecuta el paneo de la cámara
-func pan_camera(mouse_movement: Vector2):
-	if camera == null:
+func pan_camera(event):
+	if CameraGimbal == null:
 		return
-	# Calcula el movimiento de paneo en el espacio de la cámara
-	var pan_offset = -camera.transform.basis.x * mouse_movement.x * pan_sensitivity + camera.transform.basis.y * mouse_movement.y * pan_sensitivity
-	camera.focus_point += pan_offset
-	camera.update_camera_position()  # Asegura que se actualice la posición
+	# Verifica si el botón izquierdo del ratón está presionado
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		if event is InputEventMouseMotion:
+			# Obtiene el movimiento del ratón
+			var pan_offset = Vector3(-event.relative.x, event.relative.y, 0) * pan_sensitivity
+
+			# Actualiza la posición del gimbal de la cámara
+			CameraGimbal.translate(pan_offset)

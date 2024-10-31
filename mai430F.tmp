@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://btt4pttacg7th"]
+[gd_scene load_steps=13 format=3 uid="uid://btt4pttacg7th"]
 
-[ext_resource type="Script" path="res://scripts/CameraManager.gd" id="1_8u0f8"]
-[ext_resource type="Script" path="res://scripts/PanHandler.gd" id="2_nq3tm"]
+[ext_resource type="Script" path="res://scripts/CameraOrbit.gd" id="1_mc4hu"]
+[ext_resource type="Script" path="res://scripts/PanHandler.gd" id="2_c35ob"]
 [ext_resource type="Script" path="res://scripts/Selection.gd" id="3_cmyds"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_itxba"]
@@ -19,8 +19,6 @@ sky = SubResource("Sky_bi1w7")
 [sub_resource type="Compositor" id="Compositor_jkagv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_ilde5"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5s6cm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i8vbd"]
 
@@ -50,60 +48,25 @@ sky_mode = 1
 environment = SubResource("Environment_e02o5")
 
 [node name="CameraManager" type="Node" parent="."]
-script = ExtResource("1_8u0f8")
 
-[node name="CameraGimbal" type="Node3D" parent="CameraManager"]
-transform = Transform3D(0.953733, 0, 0.300656, 0, 1, 0, -0.300656, 0, 0.953733, 0, 0.415769, 0)
-script = ExtResource("2_nq3tm")
+[node name="PanNode" type="Node3D" parent="CameraManager"]
+script = ExtResource("2_c35ob")
 
-[node name="InnerGimbal" type="Node3D" parent="CameraManager/CameraGimbal"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.40552, 0, 4.45856)
+[node name="PivotNode" type="Node3D" parent="CameraManager/PanNode"]
 
-[node name="MainCamera3D" type="Camera3D" parent="CameraManager/CameraGimbal/InnerGimbal"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.06815, 0, 3.38836)
+[node name="Camera3D" type="Camera3D" parent="CameraManager/PanNode/PivotNode"]
+transform = Transform3D(1, 0, 0, 0, 0.786601, 0.617461, 0, -0.617461, 0.786601, 0.0162593, 3.35408, 3.94374)
 attributes = SubResource("CameraAttributesPractical_knyav")
 compositor = SubResource("Compositor_jkagv")
 current = true
-fov = 35.0
+fov = 80.0
+script = ExtResource("1_mc4hu")
 
-[node name="Objects" type="Node3D" parent="."]
-script = ExtResource("3_cmyds")
-
-[node name="Cube" type="MeshInstance3D" parent="Objects"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0901074, 0.547673, -1.73858)
-mesh = SubResource("BoxMesh_ilde5")
-skeleton = NodePath("../..")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Objects/Cube"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Cube/StaticBody3D"]
-shape = SubResource("BoxShape3D_5s6cm")
-
-[node name="Cube2" type="MeshInstance3D" parent="Objects"]
-transform = Transform3D(0.650695, 0, 0.759339, 0, 1, 0, -0.759339, 0, 0.650695, -1.77005, 0.547673, -0.672403)
-mesh = SubResource("BoxMesh_ilde5")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="StaticBody3D" parent="Objects/Cube2"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Cube2/Area3D"]
-shape = SubResource("BoxShape3D_i8vbd")
-
-[node name="Floor_plane" type="MeshInstance3D" parent="Objects"]
-transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
-mesh = SubResource("PlaneMesh_bvith")
-skeleton = NodePath("../..")
-
-[node name="Area3D" type="Area3D" parent="Objects/Floor_plane"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Floor_plane/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00335564, 0.0880056, -0.0737065)
-shape = SubResource("ConvexPolygonShape3D_11o3o")
+[node name="CameraDollyNode" type="Node3D" parent="CameraManager"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label3D" type="Label3D" parent="CanvasLayer"]
-sorting_offset = 1.0
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
@@ -129,3 +92,37 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "This is a label!"
+
+[node name="Objects" type="Node3D" parent="."]
+script = ExtResource("3_cmyds")
+
+[node name="Cube" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0901074, 0.547673, -1.73858)
+mesh = SubResource("BoxMesh_ilde5")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Objects/Cube"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Cube/Area3D"]
+shape = SubResource("BoxShape3D_i8vbd")
+
+[node name="Cube2" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(0.650695, 0, 0.759339, 0, 1, 0, -0.759339, 0, 0.650695, -1.77005, 0.547673, -0.672403)
+mesh = SubResource("BoxMesh_ilde5")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Objects/Cube2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Cube2/Area3D"]
+shape = SubResource("BoxShape3D_i8vbd")
+
+[node name="Floor_plane" type="MeshInstance3D" parent="Objects"]
+transform = Transform3D(25, 0, 0, 0, 1, 0, 0, 0, 25, 0, 0, 0)
+mesh = SubResource("PlaneMesh_bvith")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Objects/Floor_plane"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Objects/Floor_plane/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00335564, 0.0880056, -0.0737065)
+shape = SubResource("ConvexPolygonShape3D_11o3o")
