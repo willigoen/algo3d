@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://dpgn8bodbrw84"]
+
+[ext_resource type="Script" path="res://scripts/Handle3D.gd" id="1_ajcd1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08uif"]
+albedo_color = Color(0.21197, 0.502166, 0.719493, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8emoj"]
+material = SubResource("StandardMaterial3D_08uif")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kjkm4"]
+height = 3.07282
+radius = 0.113109
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hko7k"]
+albedo_color = Color(0.269954, 0.549482, 0.324298, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8hwkj"]
+material = SubResource("StandardMaterial3D_hko7k")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_c7v30"]
+height = 3.07042
+radius = 0.0909936
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifkja"]
+albedo_color = Color(0.777666, 0.276025, 0.390941, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8ud2f"]
+material = SubResource("StandardMaterial3D_ifkja")
+
+[node name="Handle3D" type="Node3D"]
+script = ExtResource("1_ajcd1")
+
+[node name="X_Handle" type="Area3D" parent="."]
+
+[node name="X_Handle_mesh" type="MeshInstance3D" parent="X_Handle"]
+transform = Transform3D(0.05, 0, 0, 0, -6.55671e-08, -0.05, 0, 1.5, -2.18557e-09, 0, 0, 0)
+sorting_offset = 10.0
+mesh = SubResource("CylinderMesh_8emoj")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="X_Handle"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_kjkm4")
+
+[node name="Y_Handle" type="Area3D" parent="."]
+
+[node name="Y_Handle_mesh" type="MeshInstance3D" parent="Y_Handle"]
+transform = Transform3D(0.05, 0, 0, 0, 1.5, 0, 0, 0, 0.05, 0, 0, 0)
+mesh = SubResource("CylinderMesh_8hwkj")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Y_Handle"]
+shape = SubResource("CylinderShape3D_c7v30")
+
+[node name="Z_Handle" type="Area3D" parent="."]
+
+[node name="Z_Handle_mesh" type="MeshInstance3D" parent="Z_Handle"]
+transform = Transform3D(-2.18557e-09, 1.5, 0, -0.05, -6.55671e-08, 0, 0, 0, 0.05, 0, 0, 0)
+mesh = SubResource("CylinderMesh_8ud2f")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Z_Handle"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_kjkm4")

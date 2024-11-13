@@ -12,7 +12,7 @@ extends Node3D
 @onready var inner_gimbal: Node3D = $InnerGimbal
 @onready var camera: Camera3D = $InnerGimbal/MainCamera3D
 
-var focus_speed_value: float = 0.3  # Multiplier for focus speed
+var focus_speed_value: float = 0.05  # Multiplier for focus speed
 
 var is_orbiting: bool = false
 var is_panning: bool = false
@@ -46,7 +46,7 @@ func _unhandled_input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F:
 		if selected_obj != null:
 			is_focusing = true
-			print("Focus key 'F' pressed. Starting focus on:", selected_obj.get_name())
+			#print("Focus key 'F' pressed. Starting focus on:", selected_obj.get_name())
 
 func _process(delta):
 	if is_focusing and selected_obj != null:
@@ -78,20 +78,20 @@ func focus_on_object(delta):
 	# Calculate the speed dynamically to reach the target in approximately 0.6 seconds
 	var dynamic_focus_speed = distance_to_target / focus_speed_value
 
-	print("Current gimbal position:", current_position, " | Target position:", target_position)
-	print("Distance to target:", distance_to_target, " | Calculated speed:", dynamic_focus_speed)
+	#print("Current gimbal position:", current_position, " | Target position:", target_position)
+	#print("Distance to target:", distance_to_target, " | Calculated speed:", dynamic_focus_speed)
 
 	# Use lerp with dynamic speed to move the gimbal towards the target
 	gimbal.global_transform.origin = current_position.lerp(target_position, dynamic_focus_speed * delta)
-	print("Updated gimbal position:", gimbal.global_transform.origin)
+	#print("Updated gimbal position:", gimbal.global_transform.origin)
 
 	# Stop focusing once close enough to the target
 	if current_position.distance_to(target_position) < 0.1:
 		is_focusing = false  # Stop the focusing movement
-		print("Focus complete. Gimbal centered on:", selected_obj.get_name())
+		#print("Focus complete. Gimbal centered on:", selected_obj.get_name())
 
 # Called by Selection.gd when an object is selected
 func _on_object_selected(selected: Node3D):
 	selected_obj = selected
 	is_focusing = false  # Reset focusing to prevent automatic focus
-	print("New object selected:", selected_obj.get_name())
+	#print("New object selected:", selected_obj.get_name())

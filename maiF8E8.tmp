@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/CameraHandler.gd" id="1_0yih8"]
 [ext_resource type="Material" uid="uid://cdpcslwskot74" path="res://materials/standard_material.tres" id="2_f08f3"]
+[ext_resource type="Script" path="res://scripts/Selection.gd" id="3_cmyds"]
 [ext_resource type="Material" uid="uid://cmqs5ay0nmwna" path="res://materials/selected_material.tres" id="4_7q07s"]
-[ext_resource type="Script" path="res://scripts/mover.gd" id="4_dcfxt"]
 [ext_resource type="PackedScene" uid="uid://dpgn8bodbrw84" path="res://scenes/Handle3D.tscn" id="5_f1j61"]
 [ext_resource type="Script" path="res://scripts/objectMover.gd" id="6_agtk3"]
 
@@ -83,19 +83,19 @@ compositor = SubResource("Compositor_jkagv")
 current = true
 fov = 35.0
 
-[node name="Object" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_acgtf")
 skeleton = NodePath("Area3D")
 script = ExtResource("6_agtk3")
 
-[node name="Area3D" type="Area3D" parent="Object"]
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Object/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
 shape = SubResource("BoxShape3D_p7ri1")
 
 [node name="Objects" type="Node3D" parent="."]
-script = ExtResource("4_dcfxt")
+script = ExtResource("3_cmyds")
 temporary_material = ExtResource("4_7q07s")
 handle_scene = ExtResource("5_f1j61")
 
@@ -160,4 +160,4 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "This is a label!"
 
-[connection signal="input_event" from="Object/Area3D" to="Object" method="_on_area_3d_input_event"]
+[connection signal="input_event" from="MeshInstance3D/Area3D" to="MeshInstance3D" method="_on_area_3d_input_event"]
