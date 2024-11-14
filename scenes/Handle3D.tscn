@@ -1,65 +1,76 @@
-[gd_scene load_steps=10 format=3 uid="uid://dpgn8bodbrw84"]
+[gd_scene load_steps=12 format=3 uid="uid://dpgn8bodbrw84"]
 
-[ext_resource type="Script" path="res://scripts/Handle3D.gd" id="1_ajcd1"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_08uif"]
-albedo_color = Color(0.21197, 0.502166, 0.719493, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_8emoj"]
-material = SubResource("StandardMaterial3D_08uif")
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_kjkm4"]
-height = 3.07282
-radius = 0.113109
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hko7k"]
-albedo_color = Color(0.269954, 0.549482, 0.324298, 1)
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_8hwkj"]
-material = SubResource("StandardMaterial3D_hko7k")
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_c7v30"]
-height = 3.07042
-radius = 0.0909936
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifkja"]
-albedo_color = Color(0.777666, 0.276025, 0.390941, 1)
+[ext_resource type="Script" path="res://scripts/handlers_object_movement.gd" id="1_42tix"]
+[ext_resource type="Script" path="res://scripts/handlers_color_manager.gd" id="2_24f4s"]
+[ext_resource type="Material" uid="uid://6rjwx1rfpt8t" path="res://materials/handlers_colors/x_handler_material.tres" id="2_r47hq"]
+[ext_resource type="Material" uid="uid://blsaaq4c4acqi" path="res://materials/handlers_colors/y_handler_material.tres" id="3_5tww7"]
+[ext_resource type="Material" uid="uid://bv32reke8inp6" path="res://materials/handlers_colors/z_handler_material.tres" id="4_1jwt5"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_8ud2f"]
-material = SubResource("StandardMaterial3D_ifkja")
+material = ExtResource("2_r47hq")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_k1sfh"]
+radius = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8hwkj"]
+material = ExtResource("3_5tww7")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_8v0d2"]
+radius = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8emoj"]
+material = ExtResource("4_1jwt5")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wp8sf"]
+radius = 2.0
 
 [node name="Handle3D" type="Node3D"]
-script = ExtResource("1_ajcd1")
+script = ExtResource("1_42tix")
 
-[node name="X_Handle" type="Area3D" parent="."]
+[node name="ColorChanger" type="Node" parent="."]
+script = ExtResource("2_24f4s")
 
-[node name="X_Handle_mesh" type="MeshInstance3D" parent="X_Handle"]
+[node name="X_Handle_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.18557e-09, 1.5, 0, -0.05, -6.55671e-08, 0, 0, 0, 0.05, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_8ud2f")
+
+[node name="Area3D_X" type="Area3D" parent="X_Handle_mesh"]
+process_priority = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="X_Handle_mesh/Area3D_X"]
+transform = Transform3D(1, 0, 0, -3.33067e-16, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CylinderShape3D_k1sfh")
+
+[node name="Y_Handle_mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.05, 7.10543e-15, 0, 0, 1.5, 0, 0, 0, 0.05, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_8hwkj")
+
+[node name="Area3D_Y" type="Area3D" parent="Y_Handle_mesh"]
+process_priority = 10
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Y_Handle_mesh/Area3D_Y"]
+shape = SubResource("CylinderShape3D_8v0d2")
+
+[node name="Z_Handle_mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.05, 0, 0, 0, -6.55671e-08, -0.05, 0, 1.5, -2.18557e-09, 0, 0, 0)
 sorting_offset = 10.0
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_8emoj")
-skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="X_Handle"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
-shape = SubResource("CylinderShape3D_kjkm4")
+[node name="Area3D_Z" type="Area3D" parent="Z_Handle_mesh"]
+process_priority = 10
 
-[node name="Y_Handle" type="Area3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Z_Handle_mesh/Area3D_Z"]
+shape = SubResource("CylinderShape3D_wp8sf")
 
-[node name="Y_Handle_mesh" type="MeshInstance3D" parent="Y_Handle"]
-transform = Transform3D(0.05, 0, 0, 0, 1.5, 0, 0, 0, 0.05, 0, 0, 0)
-mesh = SubResource("CylinderMesh_8hwkj")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Y_Handle"]
-shape = SubResource("CylinderShape3D_c7v30")
-
-[node name="Z_Handle" type="Area3D" parent="."]
-
-[node name="Z_Handle_mesh" type="MeshInstance3D" parent="Z_Handle"]
-transform = Transform3D(-2.18557e-09, 1.5, 0, -0.05, -6.55671e-08, 0, 0, 0, 0.05, 0, 0, 0)
-mesh = SubResource("CylinderMesh_8ud2f")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Z_Handle"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("CylinderShape3D_kjkm4")
+[connection signal="input_event" from="X_Handle_mesh/Area3D_X" to="." method="_on_area_3d_x_input_event"]
+[connection signal="mouse_entered" from="X_Handle_mesh/Area3D_X" to="ColorChanger" method="_on_area_3d_x_mouse_entered"]
+[connection signal="mouse_exited" from="X_Handle_mesh/Area3D_X" to="ColorChanger" method="_on_area_3d_x_mouse_exited"]
+[connection signal="input_event" from="Y_Handle_mesh/Area3D_Y" to="." method="_on_area_3d_y_input_event"]
+[connection signal="mouse_entered" from="Y_Handle_mesh/Area3D_Y" to="ColorChanger" method="_on_area_3d_y_mouse_entered"]
+[connection signal="mouse_exited" from="Y_Handle_mesh/Area3D_Y" to="ColorChanger" method="_on_area_3d_y_mouse_exited"]
+[connection signal="input_event" from="Z_Handle_mesh/Area3D_Z" to="." method="_on_area_3d_z_input_event"]
+[connection signal="mouse_entered" from="Z_Handle_mesh/Area3D_Z" to="ColorChanger" method="_on_area_3d_z_mouse_entered"]
+[connection signal="mouse_exited" from="Z_Handle_mesh/Area3D_Z" to="ColorChanger" method="_on_area_3d_z_mouse_exited"]

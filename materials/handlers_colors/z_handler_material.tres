@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bv32reke8inp6"]
+
+[resource]
+blend_mode = 4
+no_depth_test = true
+albedo_color = Color(0.0140396, 0.122464, 0.595387, 1)
+emission_enabled = true
+emission = Color(0.0294876, 0.266672, 1, 1)
