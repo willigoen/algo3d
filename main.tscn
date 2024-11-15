@@ -1,10 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://btt4pttacg7th"]
+[gd_scene load_steps=16 format=3 uid="uid://btt4pttacg7th"]
 
-[ext_resource type="Script" path="res://scripts/CameraHandler.gd" id="1_0yih8"]
+[ext_resource type="Script" path="res://scripts/camera_manager.gd" id="1_0yih8"]
 [ext_resource type="Material" uid="uid://cdpcslwskot74" path="res://materials/standard_material.tres" id="2_f08f3"]
-[ext_resource type="Material" uid="uid://cmqs5ay0nmwna" path="res://materials/selected_material.tres" id="4_7q07s"]
 [ext_resource type="PackedScene" uid="uid://dpgn8bodbrw84" path="res://scenes/Handle3D.tscn" id="5_f1j61"]
-[ext_resource type="Script" path="res://scripts/object_manager.gd" id="6_fl50c"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_itxba"]
 sky_curve = 0.160766
@@ -37,6 +35,8 @@ material = ExtResource("2_f08f3")
 
 [node name="Main" type="Node"]
 
+[node name="ObjectManager" type="Node" parent="."]
+
 [node name="LightManager" type="Node" parent="."]
 
 [node name="LightsNode" type="Node3D" parent="LightManager"]
@@ -57,10 +57,10 @@ sky_mode = 1
 environment = SubResource("Environment_e02o5")
 
 [node name="CameraManager" type="Node" parent="."]
+script = ExtResource("1_0yih8")
 
 [node name="CameraGimbal" type="Node3D" parent="CameraManager"]
 transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 0, 0)
-script = ExtResource("1_0yih8")
 
 [node name="Cube3" type="MeshInstance3D" parent="CameraManager/CameraGimbal"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -156,10 +156,5 @@ text = "This is a label!"
 
 [node name="Handle3D" parent="." instance=ExtResource("5_f1j61")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.14551, 0.2, -0.137281)
-
-[node name="ObjectManager" type="Node3D" parent="."]
-script = ExtResource("6_fl50c")
-temporary_material = ExtResource("4_7q07s")
-handle_scene = ExtResource("5_f1j61")
 
 [connection signal="input_event" from="Object/Area3D" to="Object" method="_on_area_3d_input_event"]

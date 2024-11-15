@@ -1,5 +1,7 @@
 extends Node3D
 
+@onready var handlers_color_manager = get_node("ColorChanger")
+
 # Variables para el control de los manejadores de los ejes
 @onready var handlers: Array = [$X_Handle_mesh, $Y_Handle_mesh, $Z_Handle_mesh]
 @onready var handlers_area3D: Array = [$X_Handle_mesh/Area3D_X, $Y_Handle_mesh/Area3D_Y, $Z_Handle_mesh/Area3D_Z]
@@ -69,7 +71,9 @@ func _unhandled_input(event):
 			is_x_handler = false
 			is_y_handler = false
 			is_z_handler = false
+			handlers_color_manager.emit_signal("set_handler_state_disabled")
 			#print("Dragging stopped")
+
 
 # Calcula la posición del ratón en el plano del objeto según el eje seleccionado
 func calculate_mouse_position() -> Vector3:

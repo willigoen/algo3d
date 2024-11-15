@@ -1,4 +1,4 @@
-extends Node3D
+extends Node
 
 @export var orbit_sensitivity: float = 0.1
 @export var pan_sensitivity: float = 0.01
@@ -8,9 +8,9 @@ extends Node3D
 @export var min_orbit_elevation: float = -90.0  # Maximum angle for looking down (90 degrees downwards)
 @export var focus_speed: float = 0.1  # Speed for lerping focus to the selected object
 
-@onready var gimbal: Node3D = $"."  # Assuming the script is attached to the gimbal itself
-@onready var inner_gimbal: Node3D = $InnerGimbal
-@onready var camera: Camera3D = $InnerGimbal/MainCamera3D
+@onready var gimbal: Node3D = $CameraGimbal
+@onready var inner_gimbal: Node3D = $CameraGimbal/InnerGimbal
+@onready var camera: Camera3D = $CameraGimbal/InnerGimbal/MainCamera3D
 
 var focus_speed_value: float = 0.05  # Multiplier for focus speed
 

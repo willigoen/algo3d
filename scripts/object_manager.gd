@@ -41,7 +41,7 @@ func _select_or_deselect_object(event):
 	var from = camera.project_ray_origin(mouse_pos)
 	var to = from + camera.project_ray_normal(mouse_pos) * 1000
 
-	var space_state = get_world_3d().direct_space_state
+	var space_state =  get_world_3d().direct_space_state
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	query.exclude = [camera]
 	var result = space_state.intersect_ray(query)
