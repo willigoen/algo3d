@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqsmvmes07xi3"]
+
+[ext_resource type="Script" path="res://scripts/CameraManager.gd" id="1_8smyv"]
+[ext_resource type="Material" uid="uid://cdpcslwskot74" path="res://materials/standard_material.tres" id="2_j3g2e"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ilde5"]
+material = ExtResource("2_j3g2e")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5s6cm"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_knyav"]
+
+[sub_resource type="Compositor" id="Compositor_jkagv"]
+
+[node name="CameraManager" type="Node"]
+script = ExtResource("1_8smyv")
+
+[node name="CameraGimbal" type="Node3D" parent="."]
+transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 0, 0)
+
+[node name="Cube3" type="MeshInstance3D" parent="CameraGimbal"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+visible = false
+mesh = SubResource("BoxMesh_ilde5")
+skeleton = NodePath("../../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CameraGimbal/Cube3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraGimbal/Cube3/StaticBody3D"]
+shape = SubResource("BoxShape3D_5s6cm")
+
+[node name="InnerGimbal" type="Node3D" parent="CameraGimbal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
+
+[node name="MainCamera3D" type="Camera3D" parent="CameraGimbal/InnerGimbal"]
+attributes = SubResource("CameraAttributesPractical_knyav")
+compositor = SubResource("Compositor_jkagv")
+current = true
+fov = 35.0

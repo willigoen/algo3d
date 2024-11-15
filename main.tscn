@@ -1,6 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://btt4pttacg7th"]
+[gd_scene load_steps=14 format=3 uid="uid://btt4pttacg7th"]
 
-[ext_resource type="Script" path="res://scripts/camera_manager.gd" id="1_0yih8"]
+[ext_resource type="PackedScene" uid="uid://dqsmvmes07xi3" path="res://scenes/CameraManager.tscn" id="1_yh3wr"]
 [ext_resource type="Material" uid="uid://cdpcslwskot74" path="res://materials/standard_material.tres" id="2_f08f3"]
 [ext_resource type="PackedScene" uid="uid://dpgn8bodbrw84" path="res://scenes/Handle3D.tscn" id="5_f1j61"]
 
@@ -14,18 +14,14 @@ sky_material = SubResource("ProceduralSkyMaterial_itxba")
 background_mode = 2
 sky = SubResource("Sky_bi1w7")
 
+[sub_resource type="BoxMesh" id="BoxMesh_acgtf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_p7ri1"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_ilde5"]
 material = ExtResource("2_f08f3")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5s6cm"]
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_knyav"]
-
-[sub_resource type="Compositor" id="Compositor_jkagv"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_acgtf"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_p7ri1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i8vbd"]
 
@@ -56,30 +52,7 @@ sky_mode = 1
 [node name="WorldEnvironment" type="WorldEnvironment" parent="LightManager/LightsNode"]
 environment = SubResource("Environment_e02o5")
 
-[node name="CameraManager" type="Node" parent="."]
-script = ExtResource("1_0yih8")
-
-[node name="CameraGimbal" type="Node3D" parent="CameraManager"]
-transform = Transform3D(0.866025, -0.25, 0.433013, 0, 0.866025, 0.5, -0.5, -0.433013, 0.75, 0, 0, 0)
-
-[node name="Cube3" type="MeshInstance3D" parent="CameraManager/CameraGimbal"]
-transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
-mesh = SubResource("BoxMesh_ilde5")
-skeleton = NodePath("../../..")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="CameraManager/CameraGimbal/Cube3"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraManager/CameraGimbal/Cube3/StaticBody3D"]
-shape = SubResource("BoxShape3D_5s6cm")
-
-[node name="InnerGimbal" type="Node3D" parent="CameraManager/CameraGimbal"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 10)
-
-[node name="MainCamera3D" type="Camera3D" parent="CameraManager/CameraGimbal/InnerGimbal"]
-attributes = SubResource("CameraAttributesPractical_knyav")
-compositor = SubResource("Compositor_jkagv")
-current = true
-fov = 35.0
+[node name="CameraManager" parent="." instance=ExtResource("1_yh3wr")]
 
 [node name="Object" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
